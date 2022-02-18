@@ -1,18 +1,23 @@
 import useMarvelService from '../../service/MarvelService';
 import {useState, useEffect} from 'react';
 import Pagination from '../pagination/Pagination';
+import Spinner from '../spiner/Spinner';
+import ErrorMessage from '../errorMassage/ErrorMessage';
 
 import './characters.scss';
-import ArrowLeft from './left.png';
-import ArrowRight from './right.png';
-
 
 const Characters = (props) => {
-    const {getAllCharacters} = useMarvelService();
+    const {getAllCharacters, loading, error} = useMarvelService();
 
+    //States
     const [charList, setCharList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [charPage] = useState(9);
+
+    //Variables for pagination
+    let lastCharIndex = charPage * currentPage;
+    let firstCharIndex = lastCharIndex - charPage;
+    let currentChar = charList.slice(firstCharIndex, lastCharIndex);
 
     useEffect(() => {
         getAllCharacters(210)
@@ -20,16 +25,19 @@ const Characters = (props) => {
         // eslint-disable-next-line
     }, []);
 
-    let lastCharIndex = charPage * currentPage;
-    let firstCharIndex = lastCharIndex - charPage;
-    let currentChar = charList.slice(firstCharIndex, lastCharIndex);
-
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     }
 
-    const nextPage = () => setCurrentPage(prev => prev === 5? prev = 1 : prev + 1);
-    const prevPage = () => setCurrentPage(prev => prev === 1? prev = 5 : prev - 1);
+    // Functions for ArrowPage (props for Pagination)
+    const nextPage = () => {
+        setCurrentPage(prev => prev === 5? prev = 1 : prev + 1);
+        window.scrollTo(0,0);
+    };
+    const prevPage = () => {
+        setCurrentPage(prev => prev === 1? prev = 5 : prev - 1);
+        window.scrollTo(0,0);
+    };
 
     function renderItems(arr) {
         const items =  arr.map((item, i) => {
@@ -86,17 +94,18 @@ const Characters = (props) => {
     return (
         <div className='container'>
             <div className="char__list">
+                {loading ? <Spinner/> : null}
+                {error ? <ErrorMessage/> : null}
                 {items}
                 <div className='char__pagin'>
-                    <img src={ArrowLeft} alt="ArrowLeft" 
-                        onClick={prevPage}/>
                     <Pagination
                         charPage={charPage}
                         totalChar={charList.length}
                         paginate={paginate}
+                        nextPage={nextPage}
+                        prevPage={prevPage}
+                        currentPage={currentPage}
                     />
-                    <img src={ArrowRight} alt="ArrowRight" 
-                        onClick={nextPage}/>
                 </div>
             </div>
         </div>

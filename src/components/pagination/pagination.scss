@@ -1,0 +1,39 @@
+.pagination{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &__li{
+        display: block;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        margin: 0 10px;
+        img{
+            width: 30px;
+        }
+    }
+    &__number{
+        text-decoration: none;
+        font-size: 20px;
+        color: black;
+    }
+}
+
+.active{
+    background-color: red;
+    .pagination{
+        &__number{
+            color:#fff;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .pagination{
+        &__li{
+            margin: 0 5px;
+        }
+    }
+}

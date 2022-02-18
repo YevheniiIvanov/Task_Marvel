@@ -30,6 +30,9 @@
         &__menu{
             font-size: 18px;
         }
+        &__img{
+            width: 80px;
+        }
     }
  }
 
@@ -37,6 +40,9 @@
     .appheader{
         &__menu{
             font-size: 14px;
+        }
+        &__img{
+            width: 60px;
         }
     }
  }

@@ -5,8 +5,6 @@ import Store from "../store/Store";
 import Games from "../games/Games";
 import AppHeader from "../header/AppHeader";
 
-import './app.scss';
-
 function App() {
   return (
     <Router>
