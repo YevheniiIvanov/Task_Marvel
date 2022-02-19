@@ -20,7 +20,7 @@ const Characters = (props) => {
     let currentChar = charList.slice(firstCharIndex, lastCharIndex);
 
     useEffect(() => {
-        getAllCharacters(210)
+        getAllCharacters()
         .then(data => setCharList([...data]))
         // eslint-disable-next-line
     }, []);
